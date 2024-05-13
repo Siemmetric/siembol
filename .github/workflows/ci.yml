@@ -104,7 +104,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4.1.1
         with:
-          images: gresearchdev/siembol-${{ matrix.component }}
+          images: siemmetric/siembol-${{ matrix.component }}
           flavor: |
             latest=${{ github.ref == 'refs/heads/main' && !endsWith(steps.info.outputs.version, '-SNAPSHOT') }}
           # We use raw because our release process is not done on tag push (yet)
@@ -172,7 +172,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4.1.1
         with:
-          images: gresearchdev/siembol-${{ matrix.component }}
+          images: siemmetric/siembol-${{ matrix.component }}
           flavor: |
             latest=${{ github.ref == 'refs/heads/main' && !endsWith(steps.info.outputs.version, '-SNAPSHOT') }}
           # We use raw because our release process is not done on tag push (yet)
@@ -257,7 +257,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4.1.1
         with:
-          images: gresearchdev/siembol-config-editor-ui
+          images: siemmetric/siembol-config-editor-ui
           flavor: |
             latest=${{ github.ref == 'refs/heads/main' && !endsWith(steps.info.outputs.version, '-dev') }}
           # We use raw because our release process is not done on tag push (yet)
@@ -361,7 +361,7 @@ jobs:
       - name: Load Docker image
         run: docker load --input image.tar
       - name: Publish Docker image
-        run: docker push --all-tags gresearchdev/siembol-${{ matrix.component }}
+        run: docker push --all-tags siemmetric/siembol-${{ matrix.component }}
 
   event_file:
     name: "Event File"
