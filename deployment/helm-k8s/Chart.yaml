@@ -11,10 +11,10 @@ keywords:
 - hdfs
 - security
 - metron
-home: https://github.com/G-Research/siembol
+home: https://github.com/Siemmetric/siembol
 sources:
-- https://github.com/G-Research/siembol
-- https://github.com/G-Research/charts/src/storm
-- https://github.com/G-Research/siembol/deployment/helm-k8s
+- https://github.com/Siemmetric/siembol
+- https://github.com/Siemmetric/charts/src/storm
+- https://github.com/Siemmetric/siembol/deployment/helm-k8s
 
 

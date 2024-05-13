@@ -11,7 +11,7 @@ jobs:
     # This prevents duplicate CI runs for our own pull requests, whilst preserving the ability to
     # run the CI for each branch push to a fork, and for each pull request originating from a fork.
     if: github.event_name == 'push' || github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -77,7 +77,7 @@ jobs:
           path: deployment/siembol-monitoring/target/siembol-monitoring-*.jar
 
   build-docker-storm:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build-java
     strategy:
       matrix:
@@ -134,7 +134,7 @@ jobs:
           path: image.tar
 
   build-docker-java:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build-java
     strategy:
       matrix:
@@ -207,7 +207,7 @@ jobs:
     # This prevents duplicate CI runs for our own pull requests, whilst preserving the ability to
     # run the CI for each branch push to a fork, and for each pull request originating from a fork.
     if: github.event_name == 'push' || github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     defaults:
       run:
         working-directory: config-editor/config-editor-ui
@@ -238,7 +238,7 @@ jobs:
           path: config-editor/config-editor-ui/dist
 
   build-docker-config-editor-ui:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build-js-config-editor-ui
     steps:
       - name: Checkout
@@ -287,7 +287,7 @@ jobs:
     # Only run this job for main and hotfix branches.
     # Jobs that depend on this one will be skipped too.
     if: github.event_name == 'push' && !github.event.repository.fork && ( github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/hotfix/') )
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build-java
     outputs:
       version: ${{ steps.version.outputs.version }}
@@ -302,7 +302,7 @@ jobs:
         shell: bash
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: release-version
     environment: release
     steps:
@@ -319,29 +319,29 @@ jobs:
           restore-keys: |
             maven-
 
-      - name: Set up Maven Central Repository
-        uses: actions/setup-java@c3ac5dd0ed8db40fedb61c32fbe677e6b355e94c
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-          server-id: ossrh
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_PASSWORD
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      # - name: Set up Maven Central Repository
+      #   uses: actions/setup-java@c3ac5dd0ed8db40fedb61c32fbe677e6b355e94c
+      #   with:
+      #     java-version: '17'
+      #     distribution: 'adopt'
+      #     server-id: ossrh
+      #     server-username: MAVEN_USERNAME
+      #     server-password: MAVEN_PASSWORD
+      #     gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+      #     gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-      - name: Release artifacts
-        run: mvn --batch-mode deploy -DskipTests
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSWORD }}
+      # - name: Release artifacts
+      #   run: mvn --batch-mode deploy -DskipTests
+      #   env:
+      #     MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      #     MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      #     MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSWORD }}
 
   release-docker:
     # Only run this job for main and hotfix branches.
     # Jobs that depend on this one will be skipped too.
     if: github.event_name == 'push' && !github.event.repository.fork && ( github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/hotfix/') )
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [build-docker-storm, build-docker-java, build-docker-config-editor-ui]
     environment: release
     strategy:
@@ -367,7 +367,7 @@ jobs:
     name: "Event File"
     needs: build-java
     if: always() && needs.build-java.result != 'skipped'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Upload
         uses: actions/upload-artifact@v3
