@@ -170,7 +170,7 @@ manager:
   serviceAccountName: "storm-topology-controller"
   serviceAccountEnabled: true
   image: 
-    repository: "gresearchdev/siembol-storm-topology-manager"
+    repository: "siemmetric/siembol-storm-topology-manager"
     tag: "latest"
     pullPolicy: Always
   containerPort: 8082

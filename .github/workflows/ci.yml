@@ -340,7 +340,7 @@ jobs:
   release-docker:
     # Only run this job for main and hotfix branches.
     # Jobs that depend on this one will be skipped too.
-    if: github.event_name == 'push' && !github.event.repository.fork && ( github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/hotfix/') )
+    # if: github.event_name == 'push' && !github.event.repository.fork && ( github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/hotfix/') )
     runs-on: self-hosted
     needs: [build-docker-storm, build-docker-java, build-docker-config-editor-ui]
     environment: release
