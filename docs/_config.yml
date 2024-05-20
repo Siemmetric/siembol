@@ -20,7 +20,7 @@ navbar_links:
   - title: "News"
     url: "/news"
   - title: "GitHub"
-    url: "https://github.com/G-Research/siembol"
+    url: "https://github.com/siemmetric/siembol"
 
 # Navigation Background Color. 
 # Options: caribbean-green, summer-sky, golden-poppy, deep-carmine-pink
@@ -47,7 +47,7 @@ features_thumbs:
     description: "Flexible incident response workflows can be built and triggered <b>in real-time</b> via the highly modular and pluggable framework."
   - title: "Simple Install"
     icon: "terminal"
-    description: "Supports deployment on an external Hadoop cluster and accommodates easy installation with prepared Docker images and Helm charts."
+    description: "Supports cloud native deployment on kubernetes and accommodates easy installation with prepared Docker images and Helm charts."
 
 # Blockquote
 # -------------------------
