@@ -25,13 +25,13 @@
 - Add siembol dependencies and other dependencies as required
 ```
 <dependency>
-    <groupId>uk.co.gresearch.siembol</groupId>
+    <groupId>com.siemmetric.siembol</groupId>
     <artifactId>siembol-common</artifactId>
     <version>${siembol.version}</version>
     <scope>provided</scope>
 </dependency>
 <dependency>
-    <groupId>uk.co.gresearch.siembol</groupId>
+    <groupId>com.siemmetric.siembol</groupId>
     <artifactId>responding-core</artifactId>
     <version>${siembol.version}</version>
     <scope>provided</scope>
@@ -80,7 +80,7 @@ A responding evaluator factory:
 - provides metadata about the evaluator such as its attributes and the type. The attributes json schema is used for integration with siembol UI. We suggest to use tools from siembol common package for generating the json schema from Java Dto classes.
 - validates evaluator attributes
 
-We suggest to look at implementation of some provided evaluators in siembol response such as [TableFormatterEvaluatorFactory](/responding/responding-core/src/main/java/uk/co/gresearch/siembol/response/evaluators/markdowntable/TableFormatterEvaluatorFactory.java)
+We suggest to look at implementation of some provided evaluators in siembol response such as [TableFormatterEvaluatorFactory](/responding/responding-core/src/main/java/com/siemmetric/siembol/response/evaluators/markdowntable/TableFormatterEvaluatorFactory.java)
 
 #### RespondingEvaluatorFactory interface
 ```

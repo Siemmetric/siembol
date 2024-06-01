@@ -7,7 +7,7 @@
     <name>enriching-storm</name>
     <packaging>jar</packaging>
     <parent>
-        <groupId>uk.co.gresearch.siembol</groupId>
+        <groupId>com.siemmetric.siembol</groupId>
         <artifactId>enriching</artifactId>
         <version>2.7.0-SNAPSHOT</version>
     </parent>
@@ -73,7 +73,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>enriching-core</artifactId>
             <version>2.7.0-SNAPSHOT</version>
             <exclusions>
@@ -183,7 +183,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>uk.co.gresearch.siembol.enrichments.storm.StormEnrichingApplication</mainClass>
+                                    <mainClass>com.siemmetric.siembol.enrichments.storm.StormEnrichingApplication</mainClass>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer">
                                 </transformer>

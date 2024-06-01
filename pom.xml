@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>uk.co.gresearch.siembol</groupId>
+    <groupId>com.siemmetric.siembol</groupId>
     <artifactId>siembol</artifactId>
     <name>siembol</name>
     <version>2.7.0-SNAPSHOT</version>
     <description>A scalable, advanced security analytics framework based on open-source big data technologies.</description>
     <inceptionYear>2019</inceptionYear>
-    <url>https://siembol.io/</url>
+    <url>https://siemmetric.com/</url>
     <licenses>
         <license>
             <name>Apache 2.0 License</name>
@@ -18,9 +18,9 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git://github.com/g-research/siembol.git</connection>
-        <developerConnection>scm:git:ssh://github.com:g-research/siembol.git</developerConnection>
-        <url>https://github.com/g-research/siembol/tree/${project.scm.tag}</url>
+        <connection>scm:git:git://github.com/siemmetric/siembol.git</connection>
+        <developerConnection>scm:git:ssh://github.com:siemmetric/siembol.git</developerConnection>
+        <url>https://github.com/siemmetric/siembol/tree/${project.scm.tag}</url>
         <tag>main</tag>
     </scm>
     <developers>
@@ -32,7 +32,7 @@
     </developers>
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/G-Research/siembol/issues</url>
+        <url>https://github.com/siemmetric/siembol/issues</url>
     </issueManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

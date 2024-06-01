@@ -70,7 +70,7 @@ Contribute to config editor UI project
 
 ### NodeJS version
 
-The current NodeJS version used can be found in the github actions pipeline [here](https://github.com/G-Research/siembol/blob/main/.github/workflows/ci.yml#L215).
+The current NodeJS version used can be found in the github actions pipeline [here](https://github.com/Siemmetric/siembol/blob/main/.github/workflows/ci.yml#L215).
 ### Angular version
 
 The current Angular version can be found in the [package.json](/config-editor/config-editor-ui/package.json) file.

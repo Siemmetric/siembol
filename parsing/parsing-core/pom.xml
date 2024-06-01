@@ -9,7 +9,7 @@
     <properties>
     </properties>
     <parent>
-        <groupId>uk.co.gresearch.siembol</groupId>
+        <groupId>com.siemmetric.siembol</groupId>
         <artifactId>parsing</artifactId>
         <version>2.7.0-SNAPSHOT</version>
     </parent>
@@ -48,7 +48,7 @@
             <version>${commons_lang3_version}</version>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>siembol-common</artifactId>
             <version>2.7.0-SNAPSHOT</version>
         </dependency>

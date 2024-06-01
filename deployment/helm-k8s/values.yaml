@@ -86,7 +86,7 @@ enrichment_store:
 
 rest:
   image: 
-    repository: "gresearchdev/siembol-config-editor-rest"
+    repository: "siemmetric/siembol-config-editor-rest"
     tag: "latest"
     pullPolicy: Always
 
@@ -129,7 +129,7 @@ rest:
 
 ui:
   image: 
-    repository: "gresearchdev/siembol-config-editor-ui"
+    repository: "siemmetric/siembol-config-editor-ui"
     tag: "latest"
     pullPolicy: Always
 
@@ -208,7 +208,7 @@ manager:
 response:
   appName: "response"
   image:
-    name: "gresearchdev/siembol-responding-stream"
+    name: "siemmetric/siembol-responding-stream"
     tag: "latest"
     pullPolicy: Always
 
@@ -246,7 +246,7 @@ response:
 siembol_monitoring:
   appName: "siembol-monitoring"
   image:
-    repository: "gresearchdev/siembol-siembol-monitoring"
+    repository: "siemmetric/siembol-siembol-monitoring"
     tag: "latest"
     pullPolicy: Always
 

@@ -28,7 +28,7 @@ deployment/quickstart_install/ps-scripts/dependencies.ps1
 
 #### 1. Prepare Siembol Config Repository
 
-1. Go to https://github.com/G-Research/siembol-config
+1. Go to https://github.com/Siemmetric/siembol-config
 2. Fork into your own organization or personal account
 
 #### 2. Create GitHub token

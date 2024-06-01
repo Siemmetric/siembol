@@ -8,12 +8,12 @@ This chart bootstraps a Siembol deployment on a Kubernetes cluster using the Hel
 To install the chart with the release name `siembol`: 
 
 ```bash
-$ helm repo add gresearch https://g-research.github.io/charts
-$ helm install siembol gresearch/siembol
+$ helm repo add siemmetric https://siemmetric.github.io/charts
+$ helm install siembol siemmetric/siembol
 ```
 These commands deploy Siembol on the Kubernetes cluster with the default configuration. The [Configuration](#configuration) section lists the parameters that can be configured during installation.
 
-> **Tip**: List all releases using: `helm search repo gresearch/siembol --versions`
+> **Tip**: List all releases using: `helm search repo siemmetric/siembol --versions`
 
 ## Uninstalling the Chart
 
@@ -48,7 +48,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | Parameter                  | Description              | Default                 |
 | ---------------------------| -------------------------| ----------------------- |
 | `rest.appName` | Config Editor Rest app name | config-editor-rest |
-| `rest.image.repository` | Config Editor Rest image repository | gresearchdev/siembol-config-editor-rest |
+| `rest.image.repository` | Config Editor Rest image repository | siemmetric/siembol-config-editor-rest |
 | `rest.image.tag` | Config Editor Rest image tag | latest |
 | `rest.image.pullPolicy` | Config Editor Rest image pull policy | Always |
 | `rest.containerPort` | Port of pod | 8081 |
@@ -73,7 +73,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | Parameter                  | Description              | Default             |
 | ---------------------------| -------------------------| ------------------- |
 | `ui.appName` | Config Editor UI app name | config-editor-ui |
-| `ui.image.repository` | Config Editor UI image repository | gresearchdev/siembol-config-editor-ui |
+| `ui.image.repository` | Config Editor UI image repository | siemmetric/siembol-config-editor-ui |
 | `ui.image.tag` | Config Editor UI image tag | latest |
 | `ui.image.pullPolicy` | Config Editor UI image pull policy | Always |
 | `ui.containerPort` | Port of pod | 8080 |
@@ -95,7 +95,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | Parameter                  | Description              | Default                     |
 | ---------------------------| -------------------------| --------------------------- |
 | `manager.appName` | storm-topology-manager | storm-topology-manager |
-| `manager.image.repository` | Topology Manager image repository | gresearchdev/siembol-storm-topology-manager |
+| `manager.image.repository` | Topology Manager image repository | siemmetric/siembol-storm-topology-manager |
 | `manager.image.tag` | Topology Manager image tag | latest |
 | `manager.image.pullPolicy` | Topology Manager image pull policy | Always |
 | `manager.containerPort` | Port of pod | 8082 |
@@ -119,7 +119,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | Parameter                  | Description              | Default             |
 | ---------------------------| -------------------------| ------------------- |
 | `response.appName` | Siembol Response app name | response |
-| `response.image.repository` | Config Editor UI image repository | gresearchdev/siembol-responding-stream |
+| `response.image.repository` | Config Editor UI image repository | siemmetric/siembol-responding-stream |
 | `response.image.tag` | Siembol Response image tag | latest |
 | `response.image.pullPolicy` | Siembol Response image pull policy | Always |
 | `response.service.port` | Service target port | 8080 |
@@ -179,7 +179,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | Parameter                  | Description              | Default             |
 | ---------------------------| -------------------------| ------------------- |
 | `siembol_monitoring.appName` | Siembol Monitoring app name | siembol-monitoring |
-| `siembol_monitoring.image.repository` | Siembol Monitoring image repository | gresearchdev/siembol-siembol-monitoring |
+| `siembol_monitoring.image.repository` | Siembol Monitoring image repository | siemmetric/siembol-siembol-monitoring |
 | `siembol_monitoring.image.tag` | Siembol Monitoring image tag | latest |
 | `siembol_monitoring.image.pullPolicy` | Siembol Monitoring image pull policy | Always |
 | `siembol_monitoring.service.port` | Service target port | 8083 |

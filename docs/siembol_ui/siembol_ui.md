@@ -30,12 +30,12 @@ Below is the default config file provided. The two default links are in "homeLin
             {
                 "icon": "library_books",
                 "title": "Documentation",
-                "link": "https://github.com/G-Research/siembol/tree/main/docs"
+                "link": "https://github.com/Siemmetric/siembol/tree/main/docs"
             },
             {   
                 "icon": "live_help",
                 "title": "Issues",
-                "link":  "https://github.com/G-Research/siembol/issues"}
+                "link":  "https://github.com/Siemmetric/siembol/issues"}
             ]
     }
 

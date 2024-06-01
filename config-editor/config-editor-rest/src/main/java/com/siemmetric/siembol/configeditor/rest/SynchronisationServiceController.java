@@ -1,0 +1,181 @@
+package com.siemmetric.siembol.configeditor.rest;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.apache.commons.codec.digest.HmacAlgorithms;
+import org.apache.commons.codec.digest.HmacUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+import com.siemmetric.siembol.common.model.EnrichmentTableDto;
+import com.siemmetric.siembol.configeditor.common.AuthorisationException;
+import com.siemmetric.siembol.configeditor.common.AuthorisationProvider;
+import com.siemmetric.siembol.configeditor.common.ServiceUserRole;
+import com.siemmetric.siembol.configeditor.common.UserInfo;
+import com.siemmetric.siembol.configeditor.model.ConfigEditorAttributes;
+import com.siemmetric.siembol.configeditor.rest.common.ConfigEditorConfigurationProperties;
+import com.siemmetric.siembol.configeditor.rest.common.UserInfoProvider;
+import com.siemmetric.siembol.configeditor.serviceaggregator.ServiceAggregator;
+import com.siemmetric.siembol.configeditor.sync.service.EnrichmentTablesProvider;
+import com.siemmetric.siembol.configeditor.sync.service.StormApplicationProvider;
+import com.siemmetric.siembol.configeditor.sync.common.SynchronisationType;
+import com.siemmetric.siembol.configeditor.sync.service.SynchronisationService;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+
+import static com.siemmetric.siembol.common.authorisation.SiembolAuthorisationProperties.SWAGGER_AUTH_SCHEMA;
+
+@ConditionalOnProperty(prefix = "config-editor", value = "synchronisation")
+@RestController
+public class SynchronisationServiceController {
+    private static final String WRONG_GITHUB_SIGNATURE = "Wrong github signature";
+    private static final String AUTHORISATION_MSG = "The user is not authorised";
+    private static final String ALL_SERVICES = "all";
+    private static final String SIGNATURE_FORMAT_MSG = "sha1=%s";
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    @Autowired
+    private AuthorisationProvider authorisationProvider;
+    @Autowired
+    private UserInfoProvider userInfoProvider;
+    @Autowired
+    private SynchronisationService synchronisationService;
+    @Autowired
+    private StormApplicationProvider stormApplicationProvider;
+    @Autowired
+    private ConfigEditorConfigurationProperties properties;
+    @Autowired
+    private EnrichmentTablesProvider enrichmentTableProvider;
+    @Autowired
+    private ServiceAggregator serviceAggregator;
+
+    @PostMapping(value = "/api/v1/sync/webhook", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ConfigEditorAttributes> synchronise(
+            @AuthenticationPrincipal Object principal,
+            @RequestParam List<String> serviceNames,
+            @RequestParam String syncType,
+            @RequestBody String body,
+            @RequestHeader(required = false, value = "X-Hub-Signature") String signature) throws Exception {
+        if (properties.getGitWebhookSecret() != null) {
+            checkSignature(properties.getGitWebhookSecret(), body, signature);
+        }
+
+        boolean allServices = serviceNames.contains(ALL_SERVICES);
+        SynchronisationType type = SynchronisationType.fromString(syncType).orElse(SynchronisationType.ALL);
+        Callable<ResponseEntity<ConfigEditorAttributes>> task = () -> allServices
+                ? synchronisationService.synchroniseAllServices(type).toResponseEntity()
+                : synchronisationService.synchroniseServices(serviceNames, type).toResponseEntity();
+
+        return executorService.submit(task).get();
+    }
+
+    @SecurityRequirement(name = SWAGGER_AUTH_SCHEMA)
+    @CrossOrigin
+    @GetMapping(value = "/api/v1/{service}/topologies", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ConfigEditorAttributes> getTopologies(
+            @AuthenticationPrincipal Object principal,
+            @PathVariable("service") String service) {
+        checkAdminAuthorisation(principal, service);
+
+        return stormApplicationProvider
+                .getStormTopologies(service)
+                .toResponseEntity();
+    }
+
+    @SecurityRequirement(name = SWAGGER_AUTH_SCHEMA)
+    @CrossOrigin
+    @PostMapping(value = "/api/v1/{service}/topologies/{topology}/restart", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ConfigEditorAttributes> restartTopology(
+            @AuthenticationPrincipal Object principal,
+            @PathVariable("service") String service,
+            @PathVariable("topology") String topology) throws ExecutionException, InterruptedException {
+        checkAdminAuthorisation(principal, service);
+        Callable<ResponseEntity<ConfigEditorAttributes>> task = () -> stormApplicationProvider
+                .restartStormTopology(service, topology)
+                .toResponseEntity();
+
+        return executorService.submit(task).get();
+    }
+
+    @SecurityRequirement(name = SWAGGER_AUTH_SCHEMA)
+    @CrossOrigin
+    @PostMapping(value = "/api/v1/topologies/restart", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ConfigEditorAttributes> restartTopologies(
+            @AuthenticationPrincipal Object principal) throws ExecutionException, InterruptedException {
+        UserInfo user = userInfoProvider.getUserInfo(principal);
+        var userAdminServices = serviceAggregator.getConfigEditorAdminServices(user)
+                .stream()
+                .map(x -> x.getName())
+                .collect(Collectors.toList());
+
+        Callable<ResponseEntity<ConfigEditorAttributes>> task = () -> stormApplicationProvider
+                .restartStormTopologiesOfServices(userAdminServices)
+                .toResponseEntity();
+
+        return executorService.submit(task).get();
+    }
+
+    private void checkAdminAuthorisation(Object principal, String service) {
+        UserInfo user = userInfoProvider.getUserInfo(principal);
+        user.setServiceUserRole(ServiceUserRole.SERVICE_ADMIN);
+        if (AuthorisationProvider.AuthorisationResult.ALLOWED
+                != authorisationProvider.getUserAuthorisation(user, service)) {
+            throw new AuthorisationException(AUTHORISATION_MSG);
+        }
+    }
+
+    @SecurityRequirement(name = SWAGGER_AUTH_SCHEMA)
+    @GetMapping(value = "/api/v1/{service}/enrichment/tables", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ConfigEditorAttributes> getEnrichmentTables(
+            @AuthenticationPrincipal Object principal,
+            @PathVariable("service") String service) {
+        checkAdminAuthorisation(principal, service);
+
+        return enrichmentTableProvider
+                .getEnrichmentTables(service)
+                .toResponseEntity();
+    }
+
+    @SecurityRequirement(name = SWAGGER_AUTH_SCHEMA)
+    @PostMapping(value = "/api/v1/{service}/enrichment/tables", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ConfigEditorAttributes> addEnrichmentTable(
+            @AuthenticationPrincipal Object principal,
+            @PathVariable("service") String service,
+            @RequestBody EnrichmentTableDto table) throws ExecutionException, InterruptedException {
+        checkAdminAuthorisation(principal, service);
+
+        Callable<ResponseEntity<ConfigEditorAttributes>> task = () -> enrichmentTableProvider
+                .addEnrichmentTable(service, table)
+                .toResponseEntity();
+        return executorService.submit(task).get();
+    }
+
+    @SecurityRequirement(name = SWAGGER_AUTH_SCHEMA)
+    @PutMapping(value = "/api/v1/{service}/enrichment/tables", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ConfigEditorAttributes> updateEnrichmentTable(
+            @AuthenticationPrincipal Object principal,
+            @PathVariable("service") String service,
+            @RequestBody EnrichmentTableDto table) throws ExecutionException, InterruptedException {
+        checkAdminAuthorisation(principal, service);
+
+        Callable<ResponseEntity<ConfigEditorAttributes>> task = () -> enrichmentTableProvider
+                .updateEnrichmentTable(service, table)
+                .toResponseEntity();
+        return executorService.submit(task).get();
+    }
+
+    private void checkSignature(String secret, String body, String signature) {
+        String digest = new HmacUtils(HmacAlgorithms.HMAC_SHA_1, secret.getBytes()).hmacHex(body.getBytes());
+        String computed = String.format(SIGNATURE_FORMAT_MSG, digest);
+        if (!computed.equals(signature)) {
+            throw new AuthorisationException(WRONG_GITHUB_SIGNATURE);
+        }
+    }
+}

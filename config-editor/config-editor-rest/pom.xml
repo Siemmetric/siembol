@@ -7,7 +7,7 @@
     <name>config-editor-rest</name>
     <packaging>jar</packaging>
     <parent>
-        <groupId>uk.co.gresearch.siembol</groupId>
+        <groupId>com.siemmetric.siembol</groupId>
         <artifactId>config-editor</artifactId>
         <version>2.7.0-SNAPSHOT</version>
     </parent>
@@ -54,7 +54,7 @@
             <version>${gson_version}</version>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>siembol-common</artifactId>
             <version>2.7.0-SNAPSHOT</version>
             <exclusions>
@@ -65,22 +65,22 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>config-editor-core</artifactId>
             <version>2.7.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>config-editor-services</artifactId>
             <version>2.7.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>config-editor-sync</artifactId>
             <version>2.7.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>alerting-core</artifactId>
             <version>2.7.0-SNAPSHOT</version>
             <exclusions>
@@ -91,7 +91,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>parsing-app</artifactId>
             <version>2.7.0-SNAPSHOT</version>
             <exclusions>
@@ -102,7 +102,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>enriching-core</artifactId>
             <version>2.7.0-SNAPSHOT</version>
             <exclusions>
@@ -113,7 +113,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>uk.co.gresearch.siembol</groupId>
+            <groupId>com.siemmetric.siembol</groupId>
             <artifactId>responding-core</artifactId>
             <version>2.7.0-SNAPSHOT</version>
             <exclusions>
@@ -204,7 +204,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring_boot_version}</version>
                 <configuration>
-                    <mainClass>uk.co.gresearch.siembol.configeditor.rest.application.Application</mainClass>
+                    <mainClass>com.siemmetric.siembol.configeditor.rest.application.Application</mainClass>
                 </configuration>
                 <executions>
                     <execution>

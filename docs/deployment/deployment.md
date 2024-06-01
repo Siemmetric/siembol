@@ -33,10 +33,10 @@ Docker images are built both from snapshots and releases.
 - Springboot applications
     - An application is loaded using  [springboot properties launcher](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html)
     - [dockerfile](/deployment/docker/Dockerfile.java)
-    - [storm-topology-manager](https://hub.docker.com/r/gresearchdev/siembol-storm-topology-manager/)
-    - [config-editor-rest](https://hub.docker.com/r/gresearchdev/siembol-config-editor-rest/)
-    - [responding-stream](https://hub.docker.com/r/gresearchdev/siembol-responding-stream/)
-    - [siembol-monitoring](https://hub.docker.com/r/gresearchdev/siembol-monitoring/)
+    - [storm-topology-manager](https://hub.docker.com/r/siemmetric/siembol-storm-topology-manager/)
+    - [config-editor-rest](https://hub.docker.com/r/siemmetric/siembol-config-editor-rest/)
+    - [responding-stream](https://hub.docker.com/r/siemmetric/siembol-responding-stream/)
+    - [siembol-monitoring](https://hub.docker.com/r/siemmetric/siembol-monitoring/)
 
 - Config editor UI
     - A Single page Angular application 
@@ -48,9 +48,9 @@ Docker images are built both from snapshots and releases.
     - [dockerfile](/deployment/docker/Dockerfile.storm)
     - Storm cli
     - Siembol java storm topology artifact
-    - [parsing-storm](https://hub.docker.com/r/gresearchdev/siembol-parsing-storm/)
-    - [enriching-storm](https://hub.docker.com/r/gresearchdev/siembol-enriching-storm/)
-    - [alerting-storm](https://hub.docker.com/r/gresearchdev/siembol-alerting-storm/)
+    - [parsing-storm](https://hub.docker.com/r/siemmetric/siembol-parsing-storm/)
+    - [enriching-storm](https://hub.docker.com/r/siemmetric/siembol-enriching-storm/)
+    - [alerting-storm](https://hub.docker.com/r/siemmetric/siembol-alerting-storm/)
 
 #### Application configuration files
 All Siembol components above have default application properties as part of their docker images. These application properties can be found in the [config directory](../../config). If you would like to override these properties, you can patch the files and use `Kustomize`, see [how to customize helm charts](how-tos/how_to_customize_helm_charts.md#how-to-patch-application-configuration-files).
