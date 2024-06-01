@@ -1,4 +1,4 @@
-FROM storm:2.4.0
+FROM storm:2.4.0-temurin
 
 ARG JAR
 ARG CLASS
