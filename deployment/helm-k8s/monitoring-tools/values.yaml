@@ -86,7 +86,7 @@ kafka-lag-exporter:
       memory: 128Mi
   clusters:
     - name: "local-cluster"
-      bootstrapBrokers: "kafka-0.kafka-headless.siembol.svc.cluster.local:9092"
+      bootstrapBrokers: "kafka-broker-0.kafka-broker-headless.siembol.svc.cluster.local:9092"
       topicWhitelist:
         - ".*"
       groupWhitelist:

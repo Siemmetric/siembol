@@ -16,13 +16,13 @@ demo_kafka_producer:
       KAFKA_TOPIC: "aws.cloudtrail"
       MESSAGE_FREQUENCY_PER_SECOND: 50
       MESSAGE_KEY: "cloudtrail"
-      KAFKA_SERVERS: "kafka-0.kafka-headless.siembol.svc.cluster.local:9092"
+      KAFKA_SERVERS: "kafka-broker-0.kafka-broker-headless.siembol.svc.cluster.local:9092"
       PYTHONUNBUFFERED: 1
     eventlogs:
       KAFKA_TOPIC: "win.eventlogs"
       MESSAGE_FREQUENCY_PER_SECOND: 100
       MESSAGE_KEY: "eventlogs"
-      KAFKA_SERVERS: "kafka-0.kafka-headless.siembol.svc.cluster.local:9092"
+      KAFKA_SERVERS: "kafka-broker-0.kafka-broker-headless.siembol.svc.cluster.local:9092"
       PYTHONUNBUFFERED: 1
    
   resources:

@@ -125,7 +125,7 @@ deployment/quickstart_install/ps-scripts/kafkaExtra.ps1
  3. Connect to the broker:
  ```bash
  kafka-console-producer.sh \
---broker-list kafka-0.kafka-headless.siembol.svc.cluster.local:9092 \
+--broker-list kafka-broker-0.kafka-broker-headless.siembol.svc.cluster.local:9092 \
 --topic <your-topic>
  ```
  4. Produce your message in terminal window
